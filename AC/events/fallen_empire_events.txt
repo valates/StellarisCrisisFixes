@@ -17,12 +17,11 @@ country_event = {
 	hide_window = yes
 	
 	mean_time_to_happen = {
-		months = 360
+		months = 120
 	}
 	
 	trigger = {
 		is_country_type = fallen_empire
-		# is_at_war = no
 		fleet_power < 5000
 		NOT = { has_country_flag = fallen_empire_fleet_spawn }
 	}
@@ -83,12 +82,14 @@ country_event = {
 	trigger = {
 		is_country_type = fallen_empire
 		is_at_war = no
+		NOT = { has_country_flag = fallen_empire_lost_war }
+		fleet_power > 20000
 		any_country = {
 			is_country_type = default
 			has_communications = root
 			NOT = { is_rival = root }
 			NOT = { root = { is_rival = prev } }
-			NOT = { root = { opinion = { who = prev value = -90 } } }
+			NOT = { root = { opinion = { who = prev value = -99 } } }
 			NOT = { root = { has_opinion_modifier = { who = prev modifier = opinion_refused_fallen_empire_demand } } }
 			NOT = { has_country_flag = fe_demand_made }
 		}
@@ -101,7 +102,7 @@ country_event = {
 				has_communications = root
 				NOT = { is_rival = root }
 				NOT = { root = { is_rival = prev } }				
-				NOT = { root = { opinion = { who = prev value = -90 } } }
+				NOT = { root = { opinion = { who = prev value = -99 } } }
 				NOT = { root = { has_opinion_modifier = { who = prev modifier = opinion_refused_fallen_empire_demand } } }	
 			}
 
@@ -121,21 +122,6 @@ country_event = {
 				}			
 				root = { remove_country_flag = make_demand }
 				country_event = { id = fallen_empires.4 }
-			}
-			
-			# Demand - abandon tomb worlds (spiritualist)
-			if = {
-				limit = {
-					root = { 
-						has_country_flag = make_demand
-						has_ai_personality = fallen_empire_spiritualist
-					}
-					any_owned_planet = {
-						is_planet_class = pc_nuked
-					}
-				}			
-				root = { remove_country_flag = make_demand }
-				country_event = { id = fallen_empires.9 }
 			}
 			
 			# Demand - ban AI research (materialist)
@@ -184,7 +170,7 @@ country_event = {
 							is_ship_class = shipclass_outpost_station
 							distance_to_empire = {
 								who = root
-								distance = 100
+								distance = 75
 							}									
 						}	
 					}
@@ -237,12 +223,9 @@ country_event = {
 		}		
 		every_owned_planet = {
 			limit = {
-				OR = {
-					has_modifier = "holy_planet"
-					is_planet_class = pc_nuked
-				}
+				has_modifier = "holy_planet"
 			}
-			destroy_colony = yes
+			destroy_colony = { keep_buildings = no }
 		}
 		add_modifier = { modifier = humiliated days = 3600 }
 		hidden_effect = { from = { remove_opinion_modifier = { who = root modifier = opinion_insult } } }
@@ -429,14 +412,14 @@ country_event = {
 				is_capital = no
 				is_neighbor_of = from
 			}
-			destroy_colony = yes
+			destroy_colony = { keep_buildings = no }
 		}
 		every_owned_fleet = {
 			limit = {
 				is_ship_class = shipclass_outpost_station
 				distance_to_empire = {
 					who = from
-					distance = 100
+					distance = 75
 				}									
 			}
 			destroy_fleet = this
@@ -509,62 +492,6 @@ country_event = {
 	}
 }
 
-country_event = {
-	id = fallen_empires.9
-	title = fallen_empires.9.name
-	desc = fallen_empires.9.desc
-	
-	is_triggered_only = yes
-	diplomatic = yes
-	
-	picture_event_data = {
-		portrait = from
-		planet_background = from
-		graphical_culture = from
-		city_level = from
-		room = from
-	}
-	
-	option = {
-		name = fallen_empires.9.a
-		ai_chance = {
-			factor = 90
-			modifier = {
-				factor = 0
-				fleet_power > 50000
-			}			
-		}		
-		every_owned_planet = {
-			limit = {
-				OR = {
-					has_modifier = "holy_planet"
-					is_planet_class = pc_nuked
-				}
-			}
-			destroy_colony = yes
-		}
-		add_modifier = { modifier = humiliated days = 3600 }
-		hidden_effect = { from = { remove_opinion_modifier = { who = root modifier = opinion_insult } } }
-		hidden_effect = { from = { remove_opinion_modifier = { who = root modifier = opinion_refused_fallen_empire_demand } } }
-		hidden_effect = { from = { remove_opinion_modifier = { who = root modifier = opinion_refused_fallen_empire_task } } }
-		hidden_effect = { from = { remove_opinion_modifier = { who = root modifier = opinion_failed_fallen_empire_task } } }
-		hidden_effect = { from = { remove_opinion_modifier = { who = root modifier = opinion_majorly_failed_fallen_empire_task } } }	
-		hidden_effect = { from = { remove_opinion_modifier = { who = root modifier = opinion_refused_fallen_empire_request } } }
-		hidden_effect = { from = { remove_opinion_modifier = { who = root modifier = opinion_spurned_fallen_empire_gift } } }
-		hidden_effect = { remove_country_flag = fe_demand_made }
-	}
-	
-	option = {
-		name = fallen_empires.9.b
-		ai_chance = {
-			factor = 10
-		}		
-		from = { add_opinion_modifier = { who = root modifier = opinion_refused_fallen_empire_demand } }
-		hidden_effect = { remove_country_flag = fe_demand_made }
-	}
-}
-
-
 # Fallen Empire establishes communications
 country_event = {
 	id = fallen_empires.10
@@ -592,13 +519,8 @@ country_event = {
 			OR = {
 				AND = {
 					root = { has_ai_personality = fallen_empire_spiritualist }
-					OR = {
-						any_owned_planet = {
-							has_modifier = "holy_planet"
-						}	
-						any_owned_planet = {
-							is_planet_class = pc_nuked
-						}						
+					any_owned_planet = {
+						has_modifier = "holy_planet"
 					}				
 				}
 				# if we're both fallen empires, we know of each other
@@ -621,13 +543,8 @@ country_event = {
 				OR = {
 					AND = {
 						root = { has_ai_personality = fallen_empire_spiritualist }
-						OR = {
-							any_owned_planet = {
-								has_modifier = "holy_planet"
-							}	
-							any_owned_planet = {
-								is_planet_class = pc_nuked
-							}						
+						any_owned_planet = {
+							has_modifier = "holy_planet"
 						}						
 					}					
 					AND = {
@@ -652,7 +569,7 @@ country_event = {
 							is_ship_class = shipclass_outpost_station
 							distance_to_empire = {
 								who = root
-								distance = 100
+								distance = 75
 							}									
 						}	
 					}						
@@ -700,7 +617,7 @@ country_event = {
 						}
 						create_ship = {
 							name = random
-							design = "Servitor"
+							design = "NAME_Servitor"
 							graphical_culture = "fallen_empire_04"
 						}						
 					}	
@@ -710,7 +627,7 @@ country_event = {
 						}
 						create_ship = {
 							name = random
-							design = "Builder"
+							design = "NAME_Builder"
 							graphical_culture = "fallen_empire_03"
 						}						
 					}	
@@ -720,7 +637,7 @@ country_event = {
 						}
 						create_ship = {
 							name = random
-							design = "Penitent"
+							design = "NAME_Penitent"
 							graphical_culture = "fallen_empire_01"
 						}						
 					}	
@@ -730,7 +647,7 @@ country_event = {
 						}
 						create_ship = {
 							name = random
-							design = "Theta"
+							design = "NAME_Theta"
 							graphical_culture = "fallen_empire_02"
 						}						
 					}						
@@ -782,102 +699,102 @@ country_event = {
 						set_owner = ROOT
 						create_ship = {
 							name = random
-							design = "Avatar"
+							design = "NAME_Avatar"
 							graphical_culture = "fallen_empire_01"
 						}
 						create_ship = {
 							name = random
-							design = "Avatar"
+							design = "NAME_Avatar"
 							graphical_culture = "fallen_empire_01"
 						}
 						create_ship = {
 							name = random
-							design = "Avatar"
+							design = "NAME_Avatar"
 							graphical_culture = "fallen_empire_01"
 						}
 						create_ship = {
 							name = random
-							design = "Avatar"
+							design = "NAME_Avatar"
 							graphical_culture = "fallen_empire_01"
 						}
 						create_ship = {
 							name = random
-							design = "Avatar"
+							design = "NAME_Avatar"
 							graphical_culture = "fallen_empire_01"
 						}
 						create_ship = {
 							name = random
-							design = "Avatar"
+							design = "NAME_Avatar"
 							graphical_culture = "fallen_empire_01"
 						}
 						create_ship = {
 							name = random
-							design = "Avatar"
+							design = "NAME_Avatar"
 							graphical_culture = "fallen_empire_01"
 						}
 						create_ship = {
 							name = random
-							design = "Avatar"
+							design = "NAME_Avatar"
 							graphical_culture = "fallen_empire_01"
 						}
 						create_ship = {
 							name = random
-							design = "Zealot"
+							design = "NAME_Zealot"
 							graphical_culture = "fallen_empire_01"
 						}
 						create_ship = {
 							name = random
-							design = "Zealot"
+							design = "NAME_Zealot"
 							graphical_culture = "fallen_empire_01"
 						}
 						create_ship = {
 							name = random
-							design = "Zealot"
+							design = "NAME_Zealot"
 							graphical_culture = "fallen_empire_01"
 						}
 						create_ship = {
 							name = random
-							design = "Zealot"
+							design = "NAME_Zealot"
 							graphical_culture = "fallen_empire_01"
 						}
 						create_ship = {
 							name = random
-							design = "Zealot"
+							design = "NAME_Zealot"
 							graphical_culture = "fallen_empire_01"
 						}
 						create_ship = {
 							name = random
-							design = "Zealot"
+							design = "NAME_Zealot"
 							graphical_culture = "fallen_empire_01"
 						}
 						create_ship = {
 							name = random
-							design = "Zealot"
+							design = "NAME_Zealot"
 							graphical_culture = "fallen_empire_01"
 						}
 						create_ship = {
 							name = random
-							design = "Zealot"
+							design = "NAME_Zealot"
 							graphical_culture = "fallen_empire_01"
 						}
 						create_ship = {
 							name = random
-							design = "Zealot"
+							design = "NAME_Zealot"
 							graphical_culture = "fallen_empire_01"
 						}
 						create_ship = {
 							name = random
-							design = "Zealot"
+							design = "NAME_Zealot"
 							graphical_culture = "fallen_empire_01"
 						}
 						create_ship = {
 							name = random
-							design = "Zealot"
+							design = "NAME_Zealot"
 							graphical_culture = "fallen_empire_01"
 						}
 						create_ship = {
 							name = random
-							design = "Zealot"
+							design = "NAME_Zealot"
 							graphical_culture = "fallen_empire_01"
 						}
 						set_location = {
@@ -895,102 +812,102 @@ country_event = {
 						set_owner = ROOT
 						create_ship = {
 							name = random
-							design = "Supremacy"
+							design = "NAME_Supremacy"
 							graphical_culture = "fallen_empire_04"
 						}
 						create_ship = {
 							name = random
-							design = "Supremacy"
+							design = "NAME_Supremacy"
 							graphical_culture = "fallen_empire_04"
 						}
 						create_ship = {
 							name = random
-							design = "Supremacy"
+							design = "NAME_Supremacy"
 							graphical_culture = "fallen_empire_04"
 						}
 						create_ship = {
 							name = random
-							design = "Supremacy"
+							design = "NAME_Supremacy"
 							graphical_culture = "fallen_empire_04"
 						}
 						create_ship = {
 							name = random
-							design = "Supremacy"
+							design = "NAME_Supremacy"
 							graphical_culture = "fallen_empire_04"
 						}
 						create_ship = {
 							name = random
-							design = "Supremacy"
+							design = "NAME_Supremacy"
 							graphical_culture = "fallen_empire_04"
 						}
 						create_ship = {
 							name = random
-							design = "Supremacy"
+							design = "NAME_Supremacy"
 							graphical_culture = "fallen_empire_04"
 						}
 						create_ship = {
 							name = random
-							design = "Supremacy"
+							design = "NAME_Supremacy"
 							graphical_culture = "fallen_empire_04"
 						}
 						create_ship = {
 							name = random
-							design = "Glory"
+							design = "NAME_Glory"
 							graphical_culture = "fallen_empire_04"
 						}
 						create_ship = {
 							name = random
-							design = "Glory"
+							design = "NAME_Glory"
 							graphical_culture = "fallen_empire_04"
 						}
 						create_ship = {
 							name = random
-							design = "Glory"
+							design = "NAME_Glory"
 							graphical_culture = "fallen_empire_04"
 						}
 						create_ship = {
 							name = random
-							design = "Glory"
+							design = "NAME_Glory"
 							graphical_culture = "fallen_empire_04"
 						}
 						create_ship = {
 							name = random
-							design = "Glory"
+							design = "NAME_Glory"
 							graphical_culture = "fallen_empire_04"
 						}
 						create_ship = {
 							name = random
-							design = "Glory"
+							design = "NAME_Glory"
 							graphical_culture = "fallen_empire_04"
 						}
 						create_ship = {
 							name = random
-							design = "Glory"
+							design = "NAME_Glory"
 							graphical_culture = "fallen_empire_04"
 						}
 						create_ship = {
 							name = random
-							design = "Glory"
+							design = "NAME_Glory"
 							graphical_culture = "fallen_empire_04"
 						}
 						create_ship = {
 							name = random
-							design = "Glory"
+							design = "NAME_Glory"
 							graphical_culture = "fallen_empire_04"
 						}
 						create_ship = {
 							name = random
-							design = "Glory"
+							design = "NAME_Glory"
 							graphical_culture = "fallen_empire_04"
 						}
 						create_ship = {
 							name = random
-							design = "Glory"
+							design = "NAME_Glory"
 							graphical_culture = "fallen_empire_04"
 						}
 						create_ship = {
 							name = random
-							design = "Glory"
+							design = "NAME_Glory"
 							graphical_culture = "fallen_empire_04"
 						}
 						set_location = {
@@ -1008,102 +925,102 @@ country_event = {
 						set_owner = ROOT
 						create_ship = {
 							name = random
-							design = "Custodian"
+							design = "NAME_Custodian"
 							graphical_culture = "fallen_empire_03"
 						}
 						create_ship = {
 							name = random
-							design = "Custodian"
+							design = "NAME_Custodian"
 							graphical_culture = "fallen_empire_03"
 						}
 						create_ship = {
 							name = random
-							design = "Custodian"
+							design = "NAME_Custodian"
 							graphical_culture = "fallen_empire_03"
 						}
 						create_ship = {
 							name = random
-							design = "Custodian"
+							design = "NAME_Custodian"
 							graphical_culture = "fallen_empire_03"
 						}
 						create_ship = {
 							name = random
-							design = "Custodian"
+							design = "NAME_Custodian"
 							graphical_culture = "fallen_empire_03"
 						}
 						create_ship = {
 							name = random
-							design = "Custodian"
+							design = "NAME_Custodian"
 							graphical_culture = "fallen_empire_03"
 						}
 						create_ship = {
 							name = random
-							design = "Custodian"
+							design = "NAME_Custodian"
 							graphical_culture = "fallen_empire_03"
 						}
 						create_ship = {
 							name = random
-							design = "Custodian"
+							design = "NAME_Custodian"
 							graphical_culture = "fallen_empire_03"
 						}
 						create_ship = {
 							name = random
-							design = "Warden"
+							design = "NAME_Warden"
 							graphical_culture = "fallen_empire_03"
 						}
 						create_ship = {
 							name = random
-							design = "Warden"
+							design = "NAME_Warden"
 							graphical_culture = "fallen_empire_03"
 						}
 						create_ship = {
 							name = random
-							design = "Warden"
+							design = "NAME_Warden"
 							graphical_culture = "fallen_empire_03"
 						}
 						create_ship = {
 							name = random
-							design = "Warden"
+							design = "NAME_Warden"
 							graphical_culture = "fallen_empire_03"
 						}
 						create_ship = {
 							name = random
-							design = "Warden"
+							design = "NAME_Warden"
 							graphical_culture = "fallen_empire_03"
 						}
 						create_ship = {
 							name = random
-							design = "Warden"
+							design = "NAME_Warden"
 							graphical_culture = "fallen_empire_03"
 						}
 						create_ship = {
 							name = random
-							design = "Warden"
+							design = "NAME_Warden"
 							graphical_culture = "fallen_empire_03"
 						}
 						create_ship = {
 							name = random
-							design = "Warden"
+							design = "NAME_Warden"
 							graphical_culture = "fallen_empire_03"
 						}
 						create_ship = {
 							name = random
-							design = "Warden"
+							design = "NAME_Warden"
 							graphical_culture = "fallen_empire_03"
 						}
 						create_ship = {
 							name = random
-							design = "Warden"
+							design = "NAME_Warden"
 							graphical_culture = "fallen_empire_03"
 						}
 						create_ship = {
 							name = random
-							design = "Warden"
+							design = "NAME_Warden"
 							graphical_culture = "fallen_empire_03"
 						}
 						create_ship = {
 							name = random
-							design = "Warden"
+							design = "NAME_Warden"
 							graphical_culture = "fallen_empire_03"
 						}
 						set_location = {
@@ -1121,102 +1038,102 @@ country_event = {
 						set_owner = ROOT
 						create_ship = {
 							name = random
-							design = "Beta"
+							design = "NAME_Beta"
 							graphical_culture = "fallen_empire_02"
 						}
 						create_ship = {
 							name = random
-							design = "Beta"
+							design = "NAME_Beta"
 							graphical_culture = "fallen_empire_02"
 						}
 						create_ship = {
 							name = random
-							design = "Beta"
+							design = "NAME_Beta"
 							graphical_culture = "fallen_empire_02"
 						}
 						create_ship = {
 							name = random
-							design = "Beta"
+							design = "NAME_Beta"
 							graphical_culture = "fallen_empire_02"
 						}
 						create_ship = {
 							name = random
-							design = "Beta"
+							design = "NAME_Beta"
 							graphical_culture = "fallen_empire_02"
 						}
 						create_ship = {
 							name = random
-							design = "Beta"
+							design = "NAME_Beta"
 							graphical_culture = "fallen_empire_02"
 						}
 						create_ship = {
 							name = random
-							design = "Beta"
+							design = "NAME_Beta"
 							graphical_culture = "fallen_empire_02"
 						}
 						create_ship = {
 							name = random
-							design = "Beta"
+							design = "NAME_Beta"
 							graphical_culture = "fallen_empire_02"
 						}
 						create_ship = {
 							name = random
-							design = "Gamma"
+							design = "NAME_Gamma"
 							graphical_culture = "fallen_empire_02"
 						}
 						create_ship = {
 							name = random
-							design = "Gamma"
+							design = "NAME_Gamma"
 							graphical_culture = "fallen_empire_02"
 						}
 						create_ship = {
 							name = random
-							design = "Gamma"
+							design = "NAME_Gamma"
 							graphical_culture = "fallen_empire_02"
 						}
 						create_ship = {
 							name = random
-							design = "Gamma"
+							design = "NAME_Gamma"
 							graphical_culture = "fallen_empire_02"
 						}
 						create_ship = {
 							name = random
-							design = "Gamma"
+							design = "NAME_Gamma"
 							graphical_culture = "fallen_empire_02"
 						}
 						create_ship = {
 							name = random
-							design = "Gamma"
+							design = "NAME_Gamma"
 							graphical_culture = "fallen_empire_02"
 						}
 						create_ship = {
 							name = random
-							design = "Gamma"
+							design = "NAME_Gamma"
 							graphical_culture = "fallen_empire_02"
 						}
 						create_ship = {
 							name = random
-							design = "Gamma"
+							design = "NAME_Gamma"
 							graphical_culture = "fallen_empire_02"
 						}
 						create_ship = {
 							name = random
-							design = "Gamma"
+							design = "NAME_Gamma"
 							graphical_culture = "fallen_empire_02"
 						}
 						create_ship = {
 							name = random
-							design = "Gamma"
+							design = "NAME_Gamma"
 							graphical_culture = "fallen_empire_02"
 						}
 						create_ship = {
 							name = random
-							design = "Gamma"
+							design = "NAME_Gamma"
 							graphical_culture = "fallen_empire_02"
 						}
 						create_ship = {
 							name = random
-							design = "Gamma"
+							design = "NAME_Gamma"
 							graphical_culture = "fallen_empire_02"
 						}
 						set_location = {
@@ -1228,5 +1145,32 @@ country_event = {
 				}					
 			}				
 		}
+	}
+}
+
+# Fallen Empire lost planets - should stop making ultimatums
+country_event = {
+	id = fallen_empires.14
+	title = OK
+	desc = OK
+	
+	hide_window = yes
+	
+	mean_time_to_happen = {
+		months = 1
+	}
+	
+	trigger = {
+		is_country_type = fallen_empire
+		NOT = { has_country_flag = fallen_empire_lost_war }
+		any_country = {
+			any_owned_planet = {
+				is_original_owner = root
+			}		
+		}
+	}
+	
+	immediate = {
+		set_country_flag = fallen_empire_lost_war
 	}
 }

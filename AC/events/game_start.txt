@@ -55,7 +55,7 @@ event = {
 
 		### SPAWN SPECIAL COUNTRIES
 		create_country = {
-			name = "The Shroud"
+			name = "NAME_The_Shroud"
 			type = shroud
 			flag = {
 				icon = {
@@ -231,6 +231,7 @@ event = {
 			}
 		}
 	}
+
 }
 
 ### Countdown to Nomad Fleet
@@ -344,9 +345,9 @@ planet_event = {
 				}
 			}
 			create_species = {
-				name = "Neo-Chimp"
-				plural = "Neo-Chimps"
-				adjective = "Neo-Chimp"
+				name = "NAME_Neo-Chimp"
+				plural = "NAME_Neo-Chimps"
+				adjective = "NAME_Neo-Chimp"
 				class = "MAM"
 				portrait = pre_mam13
 				traits = {

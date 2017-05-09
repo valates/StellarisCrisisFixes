@@ -3,7 +3,6 @@
 # Crisis Events
 #
 # Written by Henrik Eklund
-# Modded by Jared Haselton
 #
 ############################
 
@@ -427,14 +426,14 @@ country_event = {
 			limit = { has_star_flag = swarm_invasion_target_1 }
 			random_system_planet = {
 				create_species = {
-					name = "Prethoryn"
+					name = "NAME_Prethoryn"
 					class = SWARM
 					portrait = random
 					traits = random
 					immortal = yes
 				}
 				create_country = {
-					name = "Prethoryn Scourge"
+					name = "NAME_Prethoryn_Scourge"
 					type = "swarm"
 					species = last_created
 					name_list = "Prethoryn"
@@ -474,51 +473,15 @@ country_event = {
 					}
 				}
 				last_created_country = {
-					
-					# Lets Swarm do Full Bombardment
-					set_policy = {
-						policy = orbital_bombardment
-						option = orbital_bombardment_full
-						cooldown = no
-					}
-
-					# Beef up Swarm depending on difficulty
-					if = {
-						limit = {
-							is_difficulty = 2
-						}
-						add_modifier = {
-							modifier = swarm_strength_insane
-							days = -1
-						}
-						else = {
-							if = {
-								limit = {
-									is_difficulty = 1
-								}
-								add_modifier = {
-									modifier = swarm_strength_hard
-									days = -1
-								}
-								else = {
-									add_modifier = {
-										modifier = swarm_strength
-										days = -1
-									}	
-								}
-							}
-						}
-					}
-
-					create_ship_design = { design = "Swarm Transport" }
+					create_ship_design = { design = "NAME_Swarm_Transport" }
 					add_ship_design = last_created_design
-					create_ship_design = { design = "Swarm Colonizer" }
+					create_ship_design = { design = "NAME_Swarm_Colonizer" }
 					add_ship_design = last_created_design
-					create_ship_design = { design = "Swarm Constructor" }
+					create_ship_design = { design = "NAME_Swarm_Constructor" }
 					add_ship_design = last_created_design
-					create_ship_design = { design = "Swarm Small Station" }
+					create_ship_design = { design = "NAME_Swarm_Small_Station" }
 					add_ship_design = last_created_design
-					create_ship_design = { design = "Swarm Large Station" }
+					create_ship_design = { design = "NAME_Swarm_Large_Station" }
 					add_ship_design = last_created_design
 					
 					save_event_target_as = prethoryn
@@ -537,7 +500,7 @@ country_event = {
 							set_owner = PREV
 							create_ship = {
 								name = random
-								design = "Swarm Constructor"
+								design = "NAME_Swarm_Constructor"
 								graphical_culture = "swarm_01"
 							}
 							set_location = PREVPREV
@@ -570,7 +533,7 @@ country_event = {
 								set_owner = PREV
 								create_ship = {
 									name = random
-									design = "Swarm Constructor"
+									design = "NAME_Swarm_Constructor"
 									graphical_culture = "swarm_01"
 								}
 								set_location = PREVPREV
@@ -608,7 +571,7 @@ country_event = {
 								set_owner = PREV
 								create_ship = {
 									name = random
-									design = "Swarm Constructor"
+									design = "NAME_Swarm_Constructor"
 									graphical_culture = "swarm_01"
 								}
 								set_location = PREVPREV
@@ -647,7 +610,7 @@ country_event = {
 								set_owner = PREV
 								create_ship = {
 									name = random
-									design = "Swarm Constructor"
+									design = "NAME_Swarm_Constructor"
 									graphical_culture = "swarm_01"
 								}
 								set_location = PREVPREV
@@ -871,7 +834,7 @@ country_event = {
 								set_owner = event_target:prethoryn
 								create_ship = {
 									name = random
-									design = "Swarm Colonizer"
+									design = "NAME_Swarm_Colonizer"
 									graphical_culture = "swarm_01"
 								}
 								set_location = PREVPREV
@@ -886,7 +849,7 @@ country_event = {
 							set_owner = event_target:prethoryn
 							create_ship = {
 								name = random
-								design = "Swarm Constructor"
+								design = "NAME_Swarm_Constructor"
 								graphical_culture = "swarm_01"
 							}
 							set_location = PREVPREV
@@ -894,23 +857,9 @@ country_event = {
 					}
 					
 					# Army Transports
-					create_fleet = {
-						name = "NAME_Prethoryn_Armies"
-						effect = {
-							set_owner = event_target:prethoryn
-							while = {
-								count = 3
-								create_army_transport = {
-									ship_name = "Prethoryn Transport"
-									graphical_culture = "swarm_01"
-									army_name = "Prethoryn Invaders"
-									army_type = "swarm_army"
-									species = event_target:prethoryn_species
-								}
-							}
-							set_location = PREVPREV
-						}
-					}
+					swarm_armies = yes
+					swarm_armies = yes
+					swarm_armies = yes
 				}
 			}
 			
@@ -933,7 +882,7 @@ country_event = {
 									set_owner = event_target:prethoryn
 									create_ship = {
 										name = random
-										design = "Swarm Colonizer"
+										design = "NAME_Swarm_Colonizer"
 										graphical_culture = "swarm_01"
 									}
 									set_location = PREVPREV
@@ -948,7 +897,7 @@ country_event = {
 								set_owner = event_target:prethoryn
 								create_ship = {
 									name = random
-									design = "Swarm Constructor"
+									design = "NAME_Swarm_Constructor"
 									graphical_culture = "swarm_01"
 								}
 								set_location = PREVPREV
@@ -956,23 +905,9 @@ country_event = {
 						}
 						
 						# Army Transports
-						create_fleet = {
-							name = "NAME_Prethoryn_Armies"
-							effect = {
-								set_owner = event_target:prethoryn
-								while = {
-									count = 3
-									create_army_transport = {
-										ship_name = "Prethoryn Transport"
-										graphical_culture = "swarm_01"
-										army_name = "Prethoryn Invaders"
-										army_type = "swarm_army"
-										species = event_target:prethoryn_species
-									}
-								}
-								set_location = PREVPREV
-							}
-						}
+						swarm_armies = yes
+						swarm_armies = yes
+						swarm_armies = yes
 					}
 				}
 			}
@@ -996,7 +931,7 @@ country_event = {
 									set_owner = event_target:prethoryn
 									create_ship = {
 										name = random
-										design = "Swarm Colonizer"
+										design = "NAME_Swarm_Colonizer"
 										graphical_culture = "swarm_01"
 									}
 									set_location = PREVPREV
@@ -1011,7 +946,7 @@ country_event = {
 								set_owner = event_target:prethoryn
 								create_ship = {
 									name = random
-									design = "Swarm Constructor"
+									design = "NAME_Swarm_Constructor"
 									graphical_culture = "swarm_01"
 								}
 								set_location = PREVPREV
@@ -1026,9 +961,9 @@ country_event = {
 								while = {
 									count = 3
 									create_army_transport = {
-										ship_name = "Prethoryn Transport"
+										ship_name = "NAME_Prethoryn_Transport"
 										graphical_culture = "swarm_01"
-										army_name = "Prethoryn Invaders"
+										army_name = "NAME_Prethoryn_Invaders"
 										army_type = "swarm_army"
 										species = event_target:prethoryn_species
 									}
@@ -1036,6 +971,9 @@ country_event = {
 								set_location = PREVPREV
 							}
 						}
+						swarm_armies = yes
+						swarm_armies = yes
+						swarm_armies = yes
 					}
 				}
 			}
@@ -1058,7 +996,7 @@ country_event = {
 									set_owner = event_target:prethoryn
 									create_ship = {
 										name = random
-										design = "Swarm Colonizer"
+										design = "NAME_Swarm_Colonizer"
 										graphical_culture = "swarm_01"
 									}
 									set_location = PREVPREV
@@ -1073,7 +1011,7 @@ country_event = {
 								set_owner = event_target:prethoryn
 								create_ship = {
 									name = random
-									design = "Swarm Constructor"
+									design = "NAME_Swarm_Constructor"
 									graphical_culture = "swarm_01"
 								}
 								set_location = PREVPREV
@@ -1081,23 +1019,9 @@ country_event = {
 						}
 						
 						# Army Transports
-						create_fleet = {
-							name = "NAME_Prethoryn_Armies"
-							effect = {
-								set_owner = event_target:prethoryn
-								while = {
-									count = 3
-									create_army_transport = {
-										ship_name = "Prethoryn Transport"
-										graphical_culture = "swarm_01"
-										army_name = "Prethoryn Invaders"
-										army_type = "swarm_army"
-										species = event_target:prethoryn_species
-									}
-								}
-								set_location = PREVPREV
-							}
-						}
+						swarm_armies = yes
+						swarm_armies = yes
+						swarm_armies = yes
 					}
 				}
 			}
@@ -1529,7 +1453,7 @@ country_event = {
 					set_owner = ROOT
 					create_ship = {
 						name = random
-						design = "Spearhead"
+						design = "NAME_Spearhead"
 						graphical_culture = "mammalian_01"
 					}
 					assign_leader = last_created_leader
@@ -1537,7 +1461,7 @@ country_event = {
 						count = 3
 						create_ship = {
 							name = random
-							design = "Spearhead"
+							design = "NAME_Spearhead"
 							graphical_culture = "reptilian_01"
 						}
 					}
@@ -1545,7 +1469,7 @@ country_event = {
 						count = 6
 						create_ship = {
 							name = random
-							design = "Death's Head"
+							design = "NAME_Deaths_Head"
 							graphical_culture = "mammalian_01"
 						}
 					}
@@ -1553,7 +1477,7 @@ country_event = {
 						count = 8
 						create_ship = {
 							name = random
-							design = "Bug Crusher"
+							design = "NAME_Bug_Crusher"
 							graphical_culture = "avian_01"
 						}
 					}
@@ -1561,7 +1485,7 @@ country_event = {
 						count = 18
 						create_ship = {
 							name = random
-							design = "Blade"
+							design = "NAME_Blade"
 							graphical_culture = "reptilian_01"
 						}
 					}
@@ -1656,7 +1580,7 @@ country_event = {
 					set_owner = ROOT
 					create_ship = {
 						name = random
-						design = "Spearhead"
+						design = "NAME_Spearhead"
 						graphical_culture = "mammalian_01"
 					}
 					assign_leader = last_created_leader
@@ -1664,7 +1588,7 @@ country_event = {
 						count = 3
 						create_ship = {
 							name = random
-							design = "Spearhead"
+							design = "NAME_Spearhead"
 							graphical_culture = "reptilian_01"
 						}
 					}
@@ -1672,7 +1596,7 @@ country_event = {
 						count = 6
 						create_ship = {
 							name = random
-							design = "Death's Head"
+							design = "NAME_Deaths_Head"
 							graphical_culture = "mammalian_01"
 						}
 					}
@@ -1680,7 +1604,7 @@ country_event = {
 						count = 8
 						create_ship = {
 							name = random
-							design = "Bug Crusher"
+							design = "NAME_Bug_Crusher"
 							graphical_culture = "avian_01"
 						}
 					}
@@ -1688,7 +1612,7 @@ country_event = {
 						count = 18
 						create_ship = {
 							name = random
-							design = "Blade"
+							design = "NAME_Blade"
 							graphical_culture = "reptilian_01"
 						}
 					}
@@ -1812,7 +1736,7 @@ country_event = {
 					effect = {
 						set_owner = ROOT
 						create_ship_design = {
-							design = "Starfang"
+							design = "NAME_Starfang"
 							ftl = root
 						}
 						while = {
@@ -1823,7 +1747,7 @@ country_event = {
 							}
 						}
 						create_ship_design = {
-							design = "Voidstalker"
+							design = "NAME_Voidstalker"
 							ftl = root
 						}
 						while = {
@@ -1834,7 +1758,7 @@ country_event = {
 							}
 						}
 						create_ship_design = {
-							design = "Judgment"
+							design = "NAME_Judgment"
 							ftl = root
 						}
 						while = {
@@ -2049,7 +1973,7 @@ ship_event = {
 				create_leader = {
 					type = admiral
 					species = event_target:swarm_species
-					name = "Fleet Consciousness"
+					name = "NAME_Fleet_Consciousness"
 					skill = 50
 				}
 			}
@@ -2060,7 +1984,7 @@ ship_event = {
 					set_owner = event_target:ship_owner
 					create_ship = {
 						name = "NAME_Domesticated_Queen"
-						design = "Swarm Queen"
+						design = "NAME_Swarm_Queen"
 						graphical_culture = "swarm_01"
 						upgradable = no
 					}
@@ -2103,7 +2027,7 @@ fleet_event = {
 			50 = {
 				create_ship = {
 					name = "NAME_Domesticated_Warrior"
-					design = "Swarm Large"
+					design = "NAME_Swarm_Large"
 					graphical_culture = "swarm_01"
 					upgradable = no
 				}
@@ -2111,7 +2035,7 @@ fleet_event = {
 			50 = {
 				create_ship = {
 					name = "NAME_Domesticated_Swarmling"
-					design = "Swarm Small"
+					design = "NAME_Swarm_Small"
 					graphical_culture = "swarm_01"
 					upgradable = no
 				}
@@ -2153,7 +2077,7 @@ planet_event = {
 	}
 	
 	immediate = {
-		destroy_colony = yes
+		destroy_colony = { keep_buildings = no }
 		set_planet_max_health = 0
 		random_list = {
 			50 = { change_pc = pc_barren }
@@ -2214,7 +2138,7 @@ planet_event = {
 			else = {
 				if = { # Habitable Ring Worlds can't be infested... they are destroyed instead
 					limit = { is_planet_class = pc_ringworld_habitable }
-					destroy_colony = yes
+					destroy_colony = { keep_buildings = no }
 					change_pc = pc_ringworld_habitable_damaged
 				}
 			}
@@ -2236,10 +2160,28 @@ planet_event = {
 	
 	immediate = {
 		every_owned_pop = { kill_pop = yes }
-		change_pc = pc_infested
-		set_planet_max_health = 8000
-		set_planet_health = 8000
-		planet_event = { id = crisis.215 }
+		if = {
+			limit = {
+				NOR = {
+					is_planet_class = pc_ringworld_habitable
+					is_planet_class = pc_habitat # habitats are currently uninfestable
+				}
+			}
+			change_pc = pc_infested
+			set_planet_max_health = 8000
+			set_planet_health = 8000
+			else = {
+				if = { # Habitable Ring Worlds can't be infested... they are destroyed instead
+					limit = { is_planet_class = pc_ringworld_habitable }
+					change_pc = pc_ringworld_habitable_damaged
+				}
+				if = {
+					limit = { is_planet_class = pc_habitat }
+					remove_planet = yes
+				}
+			}
+			planet_event = { id = crisis.215 }
+		}
 	}
 }
 
@@ -2283,7 +2225,7 @@ event = {
 						set_owner = event_target:prethoryn
 						create_ship = {
 							name = random
-							design = "Swarm Colonizer"
+							design = "NAME_Swarm_Colonizer"
 							graphical_culture = "swarm_01"
 						}
 						set_location = {
@@ -2338,7 +2280,7 @@ event = {
 						set_owner = event_target:prethoryn
 						create_ship = {
 							name = random
-							design = "Swarm Constructor"
+							design = "NAME_Swarm_Constructor"
 							graphical_culture = "swarm_01"
 						}
 						set_location = {
@@ -2416,7 +2358,7 @@ country_event = {
 							set_owner = event_target:prethoryn
 							create_ship = {
 								name = random
-								design = "Swarm Colonizer"
+								design = "NAME_Swarm_Colonizer"
 								graphical_culture = "swarm_01"
 							}
 							set_location = {
@@ -2435,7 +2377,7 @@ country_event = {
 						set_owner = event_target:prethoryn
 						create_ship = {
 							name = random
-							design = "Swarm Constructor"
+							design = "NAME_Swarm_Constructor"
 							graphical_culture = "swarm_01"
 						}
 						set_location = {

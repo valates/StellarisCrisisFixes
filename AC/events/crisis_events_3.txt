@@ -520,31 +520,9 @@ country_event = {
 					}
 				}
 				last_created_country = {
-					# Beef up AI Uprising depending on difficulty
-					if = {
-						limit = {
-							is_difficulty = 2
-						}
-						add_modifier = {
-							modifier = ai_strength_insane
-						}
-						else = {
-							if = {
-								limit = {
-									is_difficulty = 1
-								}
-								add_modifier = {
-									modifier = ai_strength_hard
-									days = -1
-								}
-								else = {
-									add_modifier = {
-										modifier = ai_strength
-										days = -1
-									}
-								}
-							}
-						}
+					add_modifier = {
+						modifier = ai_strength
+						days = -1
 					}
 				}
 				create_colony = {
@@ -645,11 +623,11 @@ country_event = {
 					establish_communications_no_message = ROOT
 					add_energy = 1000
 					add_minerals = 1000
-					create_ship_design = { design = "AI Transport" }
+					create_ship_design = { design = "NAME_AI_Transport" }
 					add_ship_design = last_created_design
-					create_ship_design = { design = "AI Colonizer" }
+					create_ship_design = { design = "NAME_AI_Colonizer" }
 					add_ship_design = last_created_design
-					create_ship_design = { design = "AI Constructor" }
+					create_ship_design = { design = "NAME_AI_Constructor" }
 					add_ship_design = last_created_design
 				}
 				create_fleet = {
@@ -657,7 +635,7 @@ country_event = {
 						set_owner = last_created_country
 						create_ship = {
 							name = random
-							design = "AI Constructor"
+							design = "NAME_AI_Constructor"
 							graphical_culture = "ai_01"
 						}
 						set_location = PREV
@@ -669,7 +647,7 @@ country_event = {
 						set_owner = last_created_country
 						create_ship = {
 							name = random
-							design = "AI Core"
+							design = "NAME_AI_Core"
 							graphical_culture = "ai_01"
 						}
 						set_location = {
@@ -684,7 +662,7 @@ country_event = {
 						set_owner = last_created_country
 						create_ship = {
 							name = random
-							design = "AI 2"
+							design = "NAME_AI_2"
 							graphical_culture = "ai_01"
 						}
 						set_location = {
@@ -699,7 +677,7 @@ country_event = {
 						set_owner = last_created_country
 						create_ship = {
 							name = random
-							design = "AI 2"
+							design = "NAME_AI_2"
 							graphical_culture = "ai_01"
 						}
 						set_location = {
@@ -723,7 +701,7 @@ country_event = {
 								count = 6
 								create_ship = {
 									name = random
-									design = "Euthanizer"
+									design = "NAME_Euthanizer"
 									graphical_culture = "ai_01"
 								}
 							}
@@ -731,7 +709,7 @@ country_event = {
 								count = 12
 								create_ship = {
 									name = random
-									design = "Sterilizer"
+									design = "NAME_Sterilizer"
 									graphical_culture = "ai_01"
 								}
 							}
@@ -756,7 +734,7 @@ country_event = {
 								count = 8
 								create_ship = {
 									name = random
-									design = "Euthanizer"
+									design = "NAME_Euthanizer"
 									graphical_culture = "ai_01"
 								}
 							}
@@ -764,7 +742,7 @@ country_event = {
 								count = 12
 								create_ship = {
 									name = random
-									design = "Sterilizer"
+									design = "NAME_Sterilizer"
 									graphical_culture = "ai_01"
 								}
 							}
@@ -789,7 +767,7 @@ country_event = {
 								count = 8
 								create_ship = {
 									name = random
-									design = "Euthanizer"
+									design = "NAME_Euthanizer"
 									graphical_culture = "ai_01"
 								}
 							}
@@ -797,7 +775,7 @@ country_event = {
 								count = 12
 								create_ship = {
 									name = random
-									design = "Sterilizer"
+									design = "NAME_Sterilizer"
 									graphical_culture = "ai_01"
 								}
 							}

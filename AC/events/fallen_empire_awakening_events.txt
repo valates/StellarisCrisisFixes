@@ -1,4 +1,4 @@
- ############################
+############################
 #
 # Fallen Empire 'Awakening' Events
 #
@@ -28,16 +28,7 @@ country_event = {
 		any_country = {
 			is_country_type = default
 			OR = {
-				AND = {
-					is_difficulty = 0
-					NOT = { is_difficulty = 1 }
-					fleet_power > 40000
-				}
-				AND = {
-					is_difficulty = 1
-					fleet_power > 50000
-				}
-				fleet_power > 60000
+				fleet_power > 50000
 				any_owned_planet = {
 					has_planet_flag = fallen_empire_world
 				}
@@ -51,18 +42,7 @@ country_event = {
 			factor = 0.5
 			any_country = {
 				is_country_type = default
-				OR = {
-					AND = {
-						is_difficulty = 0
-						NOT = { is_difficulty = 1 }
-						fleet_power > 60000
-					}
-					AND = {
-						is_difficulty = 1
-						fleet_power > 80000
-					}
-					fleet_power > 100000
-				}
+				fleet_power > 75000
 			}
 		}
 		modifier = {
@@ -88,10 +68,6 @@ country_event = {
 					NOT = { is_original_owner = root }
 				}
 			}
-		}
-		modifier = {
-			factor = 0.01
-			has_global_flag = high_awaken_chance
 		}
 	}
 
@@ -169,7 +145,7 @@ country_event = {
 						}
 					}
 				}
-				10 = {} #No War in Heaven
+				10 = { } # No War in Heaven
 			}
 		}
 	}
