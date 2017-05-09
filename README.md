@@ -22,16 +22,6 @@ http://steamcommunity.com/sharedfiles/filedetails/?id=910137601
 -Rescaled crisis start time from 10/20/30/15% for 170/200/250/300 years to 15/25/35/20/5% for 170/200/250/300/350 years.
 
 
-### Unbidden
--Changed MTTH from 240 months to 6000 months (comment in code said MTTH should be 100 years, but it was set to 20 years). Effectively reduces probability of Unbidden spawning in a non-Jump Drive empire by a factor of 5. Should fix problems with Unbidden always being the crisis encountered. Further increase from 1200 to 6000 was to account for the fact that the roll occurs for every empire.
-
--Reduced speedup factor of spawn for empires with jump drive from 0.8 to 0.01. Effectively increases probability of Unbidden spawning in an empire with Jump Drive by a factor of 80.
-
-
-Researching jump drives now practically GUARANTEES Unbidden almost IMMEDIATELY (within 5 years). Previously the speedup due to Jump Drive was laughably minor; absolutely worst case they would show up 20% faster than normal.
-
-
-
 ## Fallen Empires
 # Fleets
 -Removed requirement that Fallen Empire not be at war to create a new fleet
@@ -39,6 +29,7 @@ Researching jump drives now practically GUARANTEES Unbidden almost IMMEDIATELY (
 -Increased time to create a new fleet from 1 month to 360 months. 
 
 Note: new fleets still only spawn if total fleet power < 5000.
+
 
 # War in Heaven
 -Increased chance of Awakened Empire having War in Heaven with rival ethos Fallen Empire from 40% to 55%.
