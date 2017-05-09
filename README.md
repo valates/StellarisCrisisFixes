@@ -23,7 +23,7 @@ http://steamcommunity.com/sharedfiles/filedetails/?id=910137601
 
 
 ## Fallen Empires
-# Fleets
+### Fleets
 -Removed requirement that Fallen Empire not be at war to create a new fleet
 
 -Increased time to create a new fleet from 1 month to 360 months. 
@@ -31,7 +31,7 @@ http://steamcommunity.com/sharedfiles/filedetails/?id=910137601
 Note: new fleets still only spawn if total fleet power < 5000.
 
 
-# War in Heaven
+### War in Heaven
 -Increased chance of Awakened Empire having War in Heaven with rival ethos Fallen Empire from 40% to 55%.
 
 -Increased chance of Awakened Empire having War in Heaven with random Fallen Empire from 20% to 35%.
